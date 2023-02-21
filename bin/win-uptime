@@ -27,15 +27,21 @@ log = logging.getLogger()
 log.setLevel(logging.DEBUG if args.verbose else logging.WARNING)
 
 """
+With my preferred short date format:
+
 [jpfuntne@JPFUNTNE-GCEYJ ~]$ systeminfo | grep "System Boot Time"
 System Boot Time:          2019-10-22, 2:48:35 PM
 [jpfuntne@JPFUNTNE-GCEYJ ~]$ ^Csteminfo | grep "System Boot Time"
 e[jpfuntne@JPFUNTNE-GCEYJ ~]$ echo ['uptime']: '06:54:05 up 13 days, 18:45,  2 users,  load average: 0.25, 0.97, 0.96'
 [uptime]: 06:54:05 up 13 days, 18:45,  2 users,  load average: 0.25, 0.97, 0.96
 [jpfuntne@JPFUNTNE-GCEYJ ~]$
+
+The default date format is:
+System Boot Time:          9/9/2021, 5:59:33 PM
 """
 
 if 'win' in sys.platform.lower():
+  timestamp = None
   cmd = ['systeminfo']
   p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   (stdout, stderr) = p.communicate()
@@ -43,11 +49,20 @@ if 'win' in sys.platform.lower():
   stderr = stderr.decode('utf-8')
   rc = p.wait()
   log.debug('{cmd}: {rc}, {stdout!r}, {stderr!r}'.format(**locals()))
+
   match = re.search('System Boot Time:\s+(\d{4}-\d{2}-\d{2}, \d{1,2}:\d{2}:\d{2} [AP]M)', stdout, flags=re.MULTILINE)
   if match:
     timestamp_string = match.group(1)
     see('timestamp_string')
     timestamp = datetime.datetime.strptime(timestamp_string, '%Y-%m-%d, %H:%M:%S %p')
+  else:
+    match = re.search('System Boot Time:\s+(\d{2}/\d{2}/\d{4}, \d{1,2}:\d{2}:\d{2} [AP]M)', stdout, flags=re.MULTILINE)
+    if match:
+      timestamp_string = match.group(1)
+      see('timestamp_string')
+      timestamp = datetime.datetime.strptime(timestamp_string, '%m/%d/%Y, %H:%M:%S %p')
+
+  if timestamp is not None:
     see('timestamp')
     if args.since:
       print(timestamp.isoformat().replace('T', ' '))
