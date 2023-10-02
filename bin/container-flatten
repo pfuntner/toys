@@ -9,6 +9,7 @@ import bruno_tools
 
 parser = argparse.ArgumentParser(description='Flatten a container image - multiple layers to one layer')
 parser.add_argument('starting_image', metavar='starting-image', help='Starting image - presumably with multiple layers')
+parser.add_argument('new_image', metavar='new-image', nargs='?', help='New image - default is the same as the starting image but with a tag of `flattened`')
 parser.add_argument('-v', '--verbose', action='count', help='Enable debugging')
 args = parser.parse_args()
 
@@ -22,56 +23,12 @@ tokens = args.starting_image.split(':')
 if len(tokens) > 2:
   parser.error(f'Illegal tag {args.starting_image!r}')
 
-command = ['docker', 'run', '-dit', '--rm', '--entrypoint', 'sh', args.starting_image]
-(rc, stdout, stderr) = bruno_tools.run(command, log=log)
-if rc == 0 and stdout:
-  container_id = stdout.strip()
+new_image = args.new_image if args.new_image else f'{tokens[0]}:flattened'
 
-  """
-    $ docker export --help
-    
-    Usage:  docker export [OPTIONS] CONTAINER
-    
-    Export a container's filesystem as a tar archive
-    
-    Aliases:
-      docker container export, docker export
-    
-    Options:
-      -o, --output string   Write to a file, instead of STDOUT
-    $
-   
-
-
-    $ docker import --help
-    
-    Usage:  docker import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]
-    
-    Import the contents from a tarball to create a filesystem image
-    
-    Aliases:
-      docker image import, docker import
-    
-    Options:
-      -c, --change list       Apply Dockerfile instruction to the created image
-      -m, --message string    Set commit message for imported image
-          --platform string   Set platform if server is multi-platform capable
-    $
-  """
-
-  command = ['bash', '-c', f'docker export {container_id} | docker import - {tokens[0]}:flattened']
-  (flatten_rc, flatten_stdout, flatten_stderr) = bruno_tools.run(command, log=log)
-  if flatten_rc != 0:
-    log.error(f'{command} failed: {flatten_rc=}, {flatten_stdout=!r}, {flatten_stderr=!r}')
-  
-  command = ['docker', 'rm', '-f', container_id]
-  (rc, stdout, stderr) = bruno_tools.run(command, log=log)
-  if rc != 0 or stderr:
-    log.error(f'{command} failed: {rc=}, {stdout=!r}, {stderr=!r}')
-    exit(1)
-
-  if flatten_rc != 0 or flatten_stderr:
-    exit(1)
-else:
-  log.error(f'{command} failed: {rc=}, {stdout=!r}, {stderr=!r}')
+"""
+  I learned the `docker build` technique from https://stackoverflow.com/a/54598281/1205158
+"""
+command = ['bash', '-c', f'echo -e "FROM {args.starting_image}\nCMD touch /tmp/.flatten" | docker build --squash -t {new_image} -']
+(rc, stdout, stderr) = bruno_tools.run(command, log=log, capture=False)
+if rc != 0:
   exit(1)
