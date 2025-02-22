@@ -50,7 +50,7 @@ I'll also use the following JSON file in most of the examples:
 ```
 This is also available [from a Gist](https://gist.githubusercontent.com/pfuntner/cdf1e734371cafe904f78b6b836347e4/raw/195b0f0fdcb402bc8182081cbe984ac336800cd2/help-example.json).
 
-Here's an example of downloading the smple on the fly without storing it in a file, even a convential temporary file:
+Here's an example of downloading the smple on the fly without storing it in a file, even a conventional temporary file:
 ```commandline
 $ data-shell <(curl https://gist.githubusercontent.com/pfuntner/cdf1e734371cafe904f78b6b836347e4/raw/195b0f0fdcb402bc8182081cbe984ac336800cd2/help-example.json 2>/dev/null)
 Confoozed?  Try `help`
