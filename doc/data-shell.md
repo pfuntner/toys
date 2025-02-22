@@ -153,9 +153,9 @@ The _keys_ you can `cd` into are based on the type of node you're currently in:
 - If the current node is a dictionary, the keys of the dictionary are the keys you can cd into.
 - If the current node is a list, the keys are integers from 0 to the length of the list minus one.
 
-You don't have to treat the key differently based on whether you're in a list or dicitonary.  The tool knows what type of key is needed.
+You don't have to treat the key differently based on whether you're in a list or dictionary.  The tool knows what type of key is needed.
 
-There are invalid `cd`s based on the current node:
+Sometimes `cd` is invalid depending on the context:
 ```commandline
 /> cd foo
 'foo' is not a key
