@@ -30,7 +30,7 @@ Select a tool below to learn more about it.  The _Bruno's Favorite_ column is us
 | [`bingrep`](doc/bingrep.md)                                     |                   | Searches for a regular expression in arbitrary data from stdin                                       |
 | [`br`](doc/br.md)                                               | Yes               | Browse a file.  Sounds simple?  Maybe, but give it a try                                             |
 | [`capture`](doc/capture.md)                                     |                   | Saves output and other information from a command                                                    |
-| [`chars`](doc/chars.md)                                         | Yes               | Display a file character-by-character                                                                |
+| [`chars`](doc/chars.md)                                         |                   | Display a file character-by-character                                                                |
 | [`color.py`](doc/color.py.md)                                   | Yes               | Print text in the specified foreground/background colors                                             |
 | [`columns`](doc/columns.md)                                     | Yes               | Prints _columns_ of stdin where columns are separated by a character or regular expression           |
 | [`comm2`](doc/comm2.md)                                         |                   | Alternate version of `comm` that does not expect the data to be sorted                               |
@@ -38,8 +38,8 @@ Select a tool below to learn more about it.  The _Bruno's Favorite_ column is us
 | [`data-shell`](doc/data-shell.md)                               | Yes, maybe        | A shell-like interactive tool for navigating around JSON, YAML, and XML objects                      |
 | [`datemath`](doc/datemath.md)                                   |                   | Perform arithmetic on date(s)                                                                        |
 | [`dowhile`](doc/dowhile.md)                                     |                   | Perform a command repeatedly until output is seen in the output                                      |
-| [`extensions`](doc/extensions.md)                               |                   | Show extensions used by files                                                                        |
 | [`drop`](doc/drop.md)                                           | Yes               | Drop the first or last `n` lines, similar to `head`/`tail`                                           |
+| [`extensions`](doc/extensions.md)                               |                   | Show extensions used by files                                                                        |
 | [`fernet`](doc/fernet.md)                                       |                   | Perform fernet encryption/decryption                                                                 |
 | [`fitwidth`](doc/fitwidth.md)                                   | Yes               | Restrict lines of data to a desired width                                                            |
 | [`flow`](doc/flow.md)                                           | Yes               | Flow lines from stdin into columnar form                                                             |
@@ -62,7 +62,7 @@ Select a tool below to learn more about it.  The _Bruno's Favorite_ column is us
 | [`oldtable`](doc/oldtable.md)                                   |                   | Parse data into a tabular form using a few input and output forms - replaced by _table_              |
 | [`peval`](doc/peval.md)                                         | Yes               | Evaluate Python expression strings                                                                   |
 | [`pipeit`](doc/pipeit.md)                                       | Maybe? Still new  | Send data to a file on a remote system                                                               |
-| [`push-ssh-key`](doc/push-ssh-key.md)                           | Maybe? Still new  | Push your public ssh key to a remote system                                                          |
+| [`push-ssh-key`](doc/push-ssh-key.md)                           | Maybe?            | Push your public ssh key to a remote system                                                          |
 | [`pycomment`](doc/pycomment.md)                                 | Yes               | vi command to toggle Python-style comments, similar to PyCharm `ctrl-/` command                      |
 | [`pythons`](doc/pythons.md)                                     |                   | Show versions of Python/Python2/Python3 interpreters                                                 |
 | [`recentdownloads`](doc/recentdownloads.md)                     |                   | Find recently downloaded files                                                                       |
@@ -70,7 +70,7 @@ Select a tool below to learn more about it.  The _Bruno's Favorite_ column is us
 | [`SecureKeyValues`](doc/SecureKeyValues.md)                     |                   | Manage secure key value stores                                                                       |
 | [`side-diff`](doc/side-diff.md)                                 | Yes               | Perform side-by-side compare, utilizing all of the screen width                                      |
 | [`ssh-exec`](doc/ssh-exec.md)                                   |                   | Execute a script on a remote host                                                                    |
-| [`strip-trailing-whitespace`](doc/strip-trailing-whitespace.md) |                   | Strip trailing whitespace from one or more files                                                     |
+| [`strip-trailing-whitespace`](doc/strip-trailing-whitespace.md) | Yes               | Strip trailing whitespace from one or more files                                                     |
 | [`supercd.sh`](doc/supercd.sh.md)                               | Yes               | Change to a directory that matches a pattern                                                         |
 | [`table`](doc/table.md)                                         | Yes               | Parse data into a tabular form using several input and output forms - more flexible than _oldtable_  |
 | [`timer`](doc/timer.md)                                         |                   | Display a progress meter over a specified duration of time                                           |
