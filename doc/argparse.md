@@ -50,6 +50,19 @@ else
   echo "$args" >&2
   exit 1
 fi
+$ bash example1.sh --help
+usage: example1.sh [-h] [-l] [-v] [path ...]
+
+Sample script with zero or more arguments, a store_true option, and a boolean
+option
+
+positional arguments:
+  path           Zero or more paths
+
+options:
+  -h, --help     show this help message and exit
+  -l, --loud     Long output
+  -v, --verbose  Enable debugging
 $ bash example1.sh
 paths=
 loud=false
