@@ -8,8 +8,12 @@ import argparse
 
 import bruno_tools
 
-parser = argparse.ArgumentParser(description='Use trivy to generate SBOM of a container image')
-parser.add_argument('image', help='Container image')
+parser = argparse.ArgumentParser(description='Display packages from SBOM of a container image or an SBOM JSON file')
+
+group = parser.add_mutually_exclusive_group()
+group.add_argument('image', nargs='?', help='Container image')
+group.add_argument('-f', '--file', help='SBOM JSON')
+
 parser.add_argument('-v', '--verbose', action='count', help='Enable debugging')
 args = parser.parse_args()
 
@@ -21,9 +25,21 @@ signal.signal(signal.SIGPIPE, lambda signum, stack_frame: exit(0))
 
 # trivy image --image-src remote --format cyclonedx "$1" 2>/dev/null | jq -r '.components[] | {Name: .name, Version: .version}'
 
-(rc, stdout, stderr) = bruno_tools.run(f'trivy image --image-src remote --format cyclonedx {args.image}')
-if stdout:
+if args.image:
+  cmd = f'trivy image --image-src remote --format cyclonedx {args.image}'
+  (rc, output, stderr) = bruno_tools.run(cmd)
+  if rc != 0 or stderr:
+    parser.error(f'{cmd!r} failed: {rc=} stdout={output!r} {stderr=}')
+elif args.file:
+  with open(args.file) as stream:
+    output = stream.read()
+else:
+  if sys.stdin.isatty():
+    parser.error('stdin must be redirected if no file name or container is provided')
+  output = sys.stdin.read()
+
+if output:
   table = bruno_tools.Table('Package', 'Version')
-  for package in json.loads(stdout)['components']:
-    table.add(package['name'], bruno_tools.JustifyLeft(package['version']))
+  for package in json.loads(output)['components']:
+    table.add(package['name'], bruno_tools.JustifyLeft(package.get('version', '')))
   table.close()
