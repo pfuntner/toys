@@ -6,7 +6,7 @@ A script to manipulate tables, reading from various formats (fixed column, CSV, 
 ## Syntax
 ```
 table.py [-h] [-H] -i {csv,yaml,fixed,json,separator,xml} -o
-         {csv,yaml,fixed,bbcode,html,json,markdown,separator,xml}
+         {csv,yaml,fixed,banner,bbcode,html,json,markdown,separator,xml}
          [--order COL,...] [--sort COL,...] [-r REGEXP] [-s SEPARATOR] [-v]
 ```
 
