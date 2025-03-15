@@ -71,6 +71,7 @@ tmpfs             1631576       36    1631540   1% /run/user/1000
 ```
 
 #### Banner output
+This is also a good use-case for the `--loose-headings` option because it doesn't get confused by the space in the _Mounted on_ column.
 ```commandline
 $ df -k | table --loose -i fixed -o banner
 +------------+------------+----------+------------+------+------------------------------+
