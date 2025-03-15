@@ -11,31 +11,32 @@ table.py [-h] [-H] -i {csv,yaml,fixed,json,separator,xml} -o
 ```
 
 ### Options and arguments
-| Option | Description | Default |
-| ------ | ----------- | ------- |
-|  `-i FORMAT` or `--input FORMAT`  | Required option that identifies the input format: `csv`, `yaml`, `fixed`, `json`, `separator`, or `xml` | There is no default.  You must identify the input format. |
-|  `-o FORMAT` or `--output FORMAT`  | Required option that identifies the output format: `csv`, `yaml`, `fixed`, `json`, `separator`, `html`, `markdown`, `bbcode`, or `xml` | There is no default.  You must identify the output format. |
-|  `-H` or `--headings`  | Treat first row of input as headings.  Significant for formats `csv`, `fixed`, and `separator` where the first row could be interpreted either way.  The option is ignored for other formats `json` and `yaml` where the interpretation is not possible. | The default is to not treat the first row as headings |
-| `-r REGEXP` or `--regexp REGEXP` | Regular expression to be used when reading with the `separator` format, ignored in all other cases | The default regular expression is to treat whitespace (`\w+`) as column separators |
-| `-s SEPARATOR` or `--separator SEPARATOR` | One or more characters to use to seperate columns when writing with the `separator` or `fixed` formats | The default is to use a single blank to separate columns in `fixed` format and a single vertical bar when writing in `separator` format. |
+| Option | Description                                                                                                                                                                                                                                                          | Default |
+| ------ |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ------- |
+|  `-i FORMAT` or `--input FORMAT`  | Required option that identifies the input format: `csv`, `yaml`, `fixed`, `json`, `separator`, or `xml`                                                                                                                                                              | There is no default.  You must identify the input format. |
+|  `-o FORMAT` or `--output FORMAT`  | Required option that identifies the output format: `csv`, `yaml`, `fixed`, `banner`, `json`, `separator`, `html`, `markdown`, `bbcode`, or `xml`                                                                                                                     | There is no default.  You must identify the output format. |
+|  `-H` or `--headings`  | Treat first row of input as headings.  Significant for formats `csv`, `fixed`, and `separator` where the first row could be interpreted either way.  The option is ignored for other formats `json` and `yaml` where the interpretation is not possible.             | The default is to not treat the first row as headings |
+| `-r REGEXP` or `--regexp REGEXP` | Regular expression to be used when reading with the `separator` format, ignored in all other cases                                                                                                                                                                   | The default regular expression is to treat whitespace (`\w+`) as column separators |
+| `-s SEPARATOR` or `--separator SEPARATOR` | One or more characters to use to seperate columns when writing with the `separator` or `fixed` formats                                                                                                                                                               | The default is to use a single blank to separate columns in `fixed` format and a single vertical bar when writing in `separator` format. |
 |  `--order COL,...`  | List of named headings to appear first in a list of columns. The option is important for situations when the heading order is not implied by the input format (`yaml` or `json` dictionaries) but is important in the output format (`separator`, `fixed` or `csv`). | For those headings that are not expressed in `--order` (even when none are specified), the headings are simply supplied in alphabetized order  |
-| `--sort COL,...` | Specify one or more comma-seperated columns by which to sort the rows | The default is to not sort the table |
-| `--no-sort` | Do not sort column headings |
-|  `-v`  | Enable verbose debugging | Debugging is not enabled |
+| `--sort COL,...` | Specify one or more comma-seperated columns by which to sort the rows                                                                                                                                                                                                | The default is to not sort the table |
+| `--no-sort` | Do not sort column headings                                                                                                                                                                                                                                          |
+|  `-v`  | Enable verbose debugging                                                                                                                                                                                                                                             | Debugging is not enabled |
 
 #### Formats
 
-| Format | Input | Output | Description |
-| ---- | ---- | --- | --- |
-| `csv` | ![Supported](images/Green_tick.png) | ![Supported](images/Green_tick.png) | Comma-separator file format |
-| `separator` | ![Supported](images/Green_tick.png) | ![Supported](images/Green_tick.png) | A free format where columns are separated by the `--regexp` regular expression.  Suseptible to mistakes when the separator is used within data.  Whitespace is a common separator but whitespace can also appear within data and headings |
-| `fixed` | ![Supported](images/Green_tick.png) | ![Supported](images/Green_tick.png) | Common to many Unix utilities such as `df` or `ls -l`.  The script identifies the beginning and ending of columns by looking for whitespace on every row |
-| `json` | ![Supported](images/Green_tick.png) | ![Supported](images/Green_tick.png) | Popular structured format, less ambiguities than less structured formats, more flexability |
-| `yaml` | ![Supported](images/Green_tick.png) | ![Supported](images/Green_tick.png) | Another popular structured format with the same strengths as `json` |
-| `xml` | ![Supported](images/Green_tick.png) | ![Supported](images/Green_tick.png) | Another popular structured format.  |
-| `html` | ![Not Supported](images/red_x.png) | ![Supported](images/Green_tick.png) | A format that can only be used for output to produce a table in [HTML](https://www.wikiwand.com/en/HTML) |
-| `markdown` | ![Not Supported](images/red_x.png) | ![Supported](images/Green_tick.png) | A format that can only be used for output to produce a table in [Markdown](https://www.wikiwand.com/en/Markdown).  Used extensively in [Slack](https://slack.com/) and [Github](https://www.wikiwand.com/en/GitHub): Issues (including pull requests), documentation, reviews, etc. |
-| `bbcode` | ![Not Supported](images/red_x.png) | ![Supported](images/Green_tick.png) | A format that can only be used for output to produce a table in [BBCode](https://www.wikiwand.com/en/BBCode).  Used in some bulletin board systems such as [Ubuntu Forums](https://ubuntuforums.org) |
+| Format      | Input                               | Output | Description                                                                                                                                                                                                                                                                        |
+|-------------|-------------------------------------| --- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `csv`       | ![Supported](images/Green_tick.png) | ![Supported](images/Green_tick.png) | Comma-separator file format                                                                                                                                                                                                                                                        |
+| `separator` | ![Supported](images/Green_tick.png) | ![Supported](images/Green_tick.png) | A free format where columns are separated by the `--regexp` regular expression.  Suseptible to mistakes when the separator is used within data.  Whitespace is a common separator but whitespace can also appear within data and headings                                          |
+| `fixed`     | ![Supported](images/Green_tick.png) | ![Supported](images/Green_tick.png) | Common to many Unix utilities such as `df` or `ls -l`.  The script identifies the beginning and ending of columns by looking for whitespace on every row                                                                                                                           |
+| `banner`    | ![Not Supported](images/red_x.png)  | ![Supported](images/Green_tick.png) | Similar to `fixed` output but a pretty boxes are rendered between columns and after the headings                                                                                                                                                                                   |
+| `json`      | ![Supported](images/Green_tick.png) | ![Supported](images/Green_tick.png) | Popular structured format, less ambiguities than less structured formats, more flexability                                                                                                                                                                                         |
+| `yaml`      | ![Supported](images/Green_tick.png) | ![Supported](images/Green_tick.png) | Another popular structured format with the same strengths as `json`                                                                                                                                                                                                                |
+| `xml`       | ![Supported](images/Green_tick.png) | ![Supported](images/Green_tick.png) | Another popular structured format.                                                                                                                                                                                                                                                 |
+| `html`      | ![Not Supported](images/red_x.png)  | ![Supported](images/Green_tick.png) | A format that can only be used for output to produce a table in [HTML](https://www.wikiwand.com/en/HTML)                                                                                                                                                                           |
+| `markdown`  | ![Not Supported](images/red_x.png)  | ![Supported](images/Green_tick.png) | A format that can only be used for output to produce a table in [Markdown](https://www.wikiwand.com/en/Markdown).  Used extensively in [Slack](https://slack.com/) and [Github](https://www.wikiwand.com/en/GitHub): Issues (including pull requests), documentation, reviews, etc. |
+| `bbcode`    | ![Not Supported](images/red_x.png)  | ![Supported](images/Green_tick.png) | A format that can only be used for output to produce a table in [BBCode](https://www.wikiwand.com/en/BBCode).  Used in some bulletin board systems such as [Ubuntu Forums](https://ubuntuforums.org)                                                                               |
 
 ## Examples
 
@@ -66,6 +67,34 @@ tmpfs             8157880        0    8157880   0% /sys/fs/cgroup
 /dev/sda1      1922727728 89149004 1833562340   5% /media/mrbruno/ExtraDrive1
 tmpfs             1631576       16    1631560   1% /run/user/125
 tmpfs             1631576       36    1631540   1% /run/user/1000
+```
+
+#### Banner output
+```commandline
+$ df -k | table --loose -i fixed -o banner
++------------+------------+----------+------------+------+------------------------------+
+| Filesystem | 1K-blocks  | Used     | Available  | Use% | Mounted on                   |
++------------+------------+----------+------------+------+------------------------------+
+| udev       | 8133732    | 0        | 8133732    | 0%   | /dev                         |
+| tmpfs      | 1631580    | 2092     | 1629488    | 1%   | /run                         |
+| /dev/sdb2  | 236102400  | 79059060 | 145026908  | 36%  | /                            |
+| tmpfs      | 8157880    | 108672   | 8049208    | 2%   | /dev/shm                     |
+| tmpfs      | 5120       | 4        | 5116       | 1%   | /run/lock                    |
+| tmpfs      | 8157880    | 0        | 8157880    | 0%   | /sys/fs/cgroup               |
+| /dev/loop1 | 8704       | 8704     | 0          | 100% | /snap/canonical-livepatch/77 |
+| /dev/loop0 | 304256     | 304256   | 0          | 100% | /snap/pycharm-community/132  |
+| /dev/loop2 | 304256     | 304256   | 0          | 100% | /snap/pycharm-community/128  |
+| /dev/loop3 | 90624      | 90624    | 0          | 100% | /snap/core/7169              |
+| /dev/loop5 | 147840     | 147840   | 0          | 100% | /snap/skype/63               |
+| /dev/loop4 | 150912     | 150912   | 0          | 100% | /snap/skype/66               |
+| /dev/loop6 | 90624      | 90624    | 0          | 100% | /snap/core/7270              |
+| /dev/loop7 | 145280     | 145280   | 0          | 100% | /snap/skype/60               |
+| /dev/loop8 | 8704       | 8704     | 0          | 100% | /snap/canonical-livepatch/81 |
+| /dev/sda1  | 1922727728 | 89149004 | 1833562340 | 5%   | /media/mrbruno/ExtraDrive1   |
+| tmpfs      | 1631576    | 16       | 1631560    | 1%   | /run/user/125                |
+| tmpfs      | 1631576    | 36       | 1631540    | 1%   | /run/user/1000               |
++------------+------------+----------+------------+------+------------------------------+
+$ 
 ```
 
 #### CSV output
