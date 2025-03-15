@@ -18,6 +18,7 @@ class MethodBase(object):
   Base class for the I/O methods.  Contains some common methods.
   """
   name = None
+  method_exclusions = list()
 
   def normalize(self, s):
     """
@@ -615,25 +616,54 @@ class FixedMethod(MethodBase):
 
     log.debug('widths: {widths}'.format(**locals()))
 
+    if isinstance(self, BannerMethod):
+      (prolog, epilog) = ('| ', '|')
+      pad_width = sum(widths) + 3 * len(widths)
+      border = '+' + ('+'.join(['-' * (width+2) for width in widths])) + '+'
+    else:
+      (prolog, epilog) = ('', '')
+      pad_width = 0
+      border = None
+
     for (row_num, row) in enumerate(root):
       if isinstance(row, dict):
         if row_num == 0:
-          stream.write(args.separator.join([col.ljust(widths[col_num]) for (col_num, col) in enumerate(order)]).rstrip())
+          if border:
+            stream.write(border + '\n')
+          stream.write((prolog + (args.separator.join([col.ljust(widths[col_num]) for (col_num, col) in enumerate(order)]).rstrip())).ljust(pad_width) + epilog)
           stream.write('\n')
-        stream.write(args.separator.join([self.justify(row.get(col, ''), widths[col_num])
-                                          for (col_num, col) in enumerate(order)]).rstrip())
+          if border:
+            stream.write(border + '\n')
+        stream.write((prolog + (args.separator.join([self.justify(row.get(col, ''), widths[col_num])
+                                          for (col_num, col) in enumerate(order)]).rstrip())).ljust(pad_width) + epilog)
       else:
+        border = None
         stream.write(args.separator.join([self.justify(row[col_num] if col_num < len(row) else '', width)
                                           for (col_num, width) in enumerate(widths)]).rstrip())
-
       stream.write('\n')
+
+    if border:
+      stream.write(border + '\n')
+
+
+
+class BannerMethod(FixedMethod):
+  """
+  Handle output in banner format.  This is similar to fixed format but will include pretty borders around the columns
+
+  This class does not support reading data in banner format.
+  """
+  name = 'banner'
+  method_exclusions = ['read']
+
+  pass
 
 
 class HtmlMethod(MethodBase):
   """
   Handle output in the HTML format.
 
-  This method does not support reading data in HTML format.
+  This class does not support reading data in HTML format.
   """
   name = 'html'
 
@@ -790,7 +820,7 @@ def method_names(method_type):
       if isinstance(method, MethodBase):
         if method.name not in [curr.name for curr in methods]:
           methods.append(method)
-        if hasattr(method, method_type):
+        if hasattr(method, method_type) and method_type not in method.method_exclusions:
           ret.append(value.name)
   return ret
 
@@ -923,7 +953,14 @@ if 'win' not in platform.platform().lower():
 if args.loose_headings:
   args.headings = True
 
-args.separator = args.separator or ('  ' if args.output == 'fixed' else '|')
+if args.separator is None:
+  if args.output == 'fixed':
+    args.separator = '  '
+  elif args.output == 'banner':
+    args.separator = ' | '
+  else:
+    args.separator = '|'
+
 if args.separator == '\\t':
   args.separator = '\t'
 
