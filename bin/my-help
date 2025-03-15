@@ -55,7 +55,7 @@ for dir in [os.path.expanduser('~/bin'), os.path.expanduser('~/.local/bin')]:
     for path in sorted(glob.glob(os.path.join(dir, '*'))):
       if os.path.isfile(path) and os.access(path, os.X_OK):
         log.info(f'{path=}')
-        if (path not in cache['knowns'] and path not in cache['unknowns']) or path in args.rebuild:
+        if (path not in cache['knowns'] and path not in cache['unknowns']) or path in (args.rebuild or []):
           log.info(f'{path} was not cached')
           process = None
           start = time.time()
