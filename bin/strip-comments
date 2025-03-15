@@ -16,7 +16,7 @@ log.setLevel(logging.DEBUG if args.verbose else logging.WARNING)
 if sys.stdin.isatty():
   parser.error('stdin must be redirected')
 
-regexp = re.compile('^\s*(#.*)?$')
+regexp = re.compile(r'^\s*(#.*)?$')
 
 for line in sys.stdin.read().splitlines():
   if not regexp.search(line):
