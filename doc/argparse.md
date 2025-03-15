@@ -139,7 +139,7 @@ The payload just contains the information that needs to be retained for parsing.
     - Built-in help for the caller
 
     It helps that I've incorporated a template in a kind of skeleton script that I use when I create any new Python script because I had coming up with it from scratch.
-- The real magic of this tool comes from the honest-to-goodness Python `argparse` script.  The hard part was encapsulating argparse-like information so it could be stashed in a bash script and reused in multiple calls: not only the argument definitions but the results of parsing.
+- The real magic of this tool comes from the honest-to-goodness Python `argparse` module.  The hard part was encapsulating argparse-like information so it could be stashed in a bash script and reused in multiple calls: not only the argument definitions but the results of parsing.
 - I'm honestly not using this tool as much as I could.  Frankly I prefer Python for tools and I kind of did this just an exercise but I had a lot of fun proving that it can be done.
 
     I mentioned having a skeleton for a new Python script - I could likely do something similar for a bash script and that could facilitate my use of this tool but these days my bash scripts are pretty minimal - if I have to do something even slightly complicated, I'll slip into Python mode. 
