@@ -5,7 +5,7 @@ A script to manipulate tables, reading from various formats (fixed column, CSV, 
 
 ## Syntax
 ```
-table.py [-h] [-H] -i {csv,yaml,fixed,json,separator,xml} -o
+table.py [-h] [-H] [--loose-headings] -i {csv,yaml,fixed,json,separator,xml} -o
          {csv,yaml,fixed,banner,bbcode,html,json,markdown,separator,xml}
          [--order COL,...] [--sort COL,...] [-r REGEXP] [-s SEPARATOR] [-v]
 ```
@@ -16,6 +16,7 @@ table.py [-h] [-H] -i {csv,yaml,fixed,json,separator,xml} -o
 |  `-i FORMAT` or `--input FORMAT`  | Required option that identifies the input format: `csv`, `yaml`, `fixed`, `json`, `separator`, or `xml`                                                                                                                                                              | There is no default.  You must identify the input format. |
 |  `-o FORMAT` or `--output FORMAT`  | Required option that identifies the output format: `csv`, `yaml`, `fixed`, `banner`, `json`, `separator`, `html`, `markdown`, `bbcode`, or `xml`                                                                                                                     | There is no default.  You must identify the output format. |
 |  `-H` or `--headings`  | Treat first row of input as headings.  Significant for formats `csv`, `fixed`, and `separator` where the first row could be interpreted either way.  The option is ignored for other formats `json` and `yaml` where the interpretation is not possible.             | The default is to not treat the first row as headings |
+|  `-l` or `--looose-headings`  | Similiar to `--headings` but all rows are used to determine where columns start and end | The default is to not treat the first row as headings |
 | `-r REGEXP` or `--regexp REGEXP` | Regular expression to be used when reading with the `separator` format, ignored in all other cases                                                                                                                                                                   | The default regular expression is to treat whitespace (`\w+`) as column separators |
 | `-s SEPARATOR` or `--separator SEPARATOR` | One or more characters to use to seperate columns when writing with the `separator` or `fixed` formats                                                                                                                                                               | The default is to use a single blank to separate columns in `fixed` format and a single vertical bar when writing in `separator` format. |
 |  `--order COL,...`  | List of named headings to appear first in a list of columns. The option is important for situations when the heading order is not implied by the input format (`yaml` or `json` dictionaries) but is important in the output format (`separator`, `fixed` or `csv`). | For those headings that are not expressed in `--order` (even when none are specified), the headings are simply supplied in alphabetized order  |
