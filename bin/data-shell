@@ -445,7 +445,7 @@ def doc_load(stream):
   raise Exception(' '.join(exceptions))
 
 
-parser = argparse.ArgumentParser(description='Interactive shell for dealing with a JSON object')
+parser = argparse.ArgumentParser(description='Interactive shell for dealing with JSON, YAML, or XML objects')
 parser.add_argument('filename', help='Name of JSON file')
 parser.add_argument('-v', '--verbose', action='count', help='Enable debugging')
 args = parser.parse_args()
