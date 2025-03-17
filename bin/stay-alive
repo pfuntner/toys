@@ -12,7 +12,7 @@ import subprocess
 
 import bruno_tools
 
-parser = argparse.ArgumentParser(description='Run a command and print a messge periodically to prevent session from timing out')
+parser = argparse.ArgumentParser(description='Run a command and print a message periodically to prevent session from timing out')
 parser.add_argument('command', nargs='+', help='Command and arguments')
 parser.add_argument('-d', '--delay', type=float, default=15, help='Delay in seconds between msgs/checks - default: 15')
 parser.add_argument('-v', '--verbose', action='count', help='Enable debugging')
