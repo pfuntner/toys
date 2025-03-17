@@ -21,6 +21,7 @@ def install_cache(category, path, **key_value_pairs):
   cache[category][path] = key_value_pairs
 
 parser = argparse.ArgumentParser(description='Extract help from local executables')
+parser.add_argument('regex', nargs='?', help='Regular expression to use to search help')
 parser.add_argument('--rebuild', nargs='*', help='Uncondtionally rebuild the cache for specific paths')
 parser.add_argument('--stats', action='store_true', help='Provide statistics on timings')
 parser.add_argument('-v', '--verbose', action='count', help='Enable debugging')
@@ -55,7 +56,7 @@ for dir in [os.path.expanduser('~/bin'), os.path.expanduser('~/.local/bin')]:
     for path in sorted(glob.glob(os.path.join(dir, '*'))):
       if os.path.isfile(path) and os.access(path, os.X_OK):
         log.info(f'{path=}')
-        if (path not in cache['knowns'] and path not in cache['unknowns']) or path in (args.rebuild or []):
+        if not (path in cache['knowns'] or path in cache['unknowns']) or path in (args.rebuild or []):
           log.info(f'{path} was not cached')
           process = None
           start = time.time()
@@ -88,7 +89,7 @@ for dir in [os.path.expanduser('~/bin'), os.path.expanduser('~/.local/bin')]:
                   if len(help_text) < 64:
                     install_cache('knowns', path, help_text=help_text, timestamp=now, start=start, stop=stop, stdout=stdout, stderr=stderr)
                   else:
-                    install_cache('unknowns', path, reason='Text too long', timestamp=now, start=start, stop=stop, stdout=stdout, stderr=stderr)
+                    install_cache('unknowns', path, reason='Text too long', timestamp=now, start=start, stop=stop, stdout=stdout, stderr=stderr, help_text=help_text)
                 else:
                   install_cache('unknowns', path, reason='Could not find end of purpose text', timestamp=now, start=start, stop=stop, stdout=stdout, stderr=stderr)
               else:
@@ -101,7 +102,8 @@ with open(cache_path, 'w') as stream:
 
 table = bruno_tools.Table('Path', 'Help')
 for path in sorted(cache['knowns'].keys()):
-  table.add(path, cache['knowns'][path]['help_text'])
+  if (not args.regex) or re.search(args.regex, cache['knowns'][path]['help_text']):
+    table.add(path, cache['knowns'][path]['help_text'])
 table.close()
 
 if args.stats:
