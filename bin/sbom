@@ -28,7 +28,7 @@ signal.signal(signal.SIGPIPE, lambda signum, stack_frame: exit(0))
 if args.image:
   cmd = f'trivy image --image-src remote --format cyclonedx {args.image}'
   (rc, output, stderr) = bruno_tools.run(cmd)
-  if rc != 0 or stderr:
+  if rc != 0:
     parser.error(f'{cmd!r} failed: {rc=} stdout={output!r} {stderr=}')
 elif args.file:
   with open(args.file) as stream:
