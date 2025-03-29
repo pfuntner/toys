@@ -1,7 +1,7 @@
 # `push-ssh-key`
 
 ## Purpose
-Push your public ssh key to a remote system's `authorized_keys` file to enable passwordless-ssh.
+Push a public ssh key to a remote system's `authorized_keys` file to enable passwordless-ssh.
 
 ## Syntax
 ```
@@ -65,3 +65,4 @@ Some debugging messages are not present in the above output.  The present script
 - Not only is the public key appended to `~/.ssh/authorized_keys` but the script also ensures the permissions of `~/.ssh/authorized_keys` are `0600` - `ssh` can be super-picky about that so I think it's a good precaution, especially if the script _creates_ `~/.ssh/authorized_keys`!
 - If you don't have a public ssh key to push, remember that you can use [`ssh-keygen`](https://man7.org/linux/man-pages/man1/ssh-keygen.1.html) to create one.  I know the prompts can seem a little confusing - I always just accept all of the defaults!
 - The public key is not copied to the remote target if passwordless ssh appears to already be enabled.
+- A good use-case: At work, I deal a lot with cloud instances - often they are imphemeral but that's just the nature of my work.  I'm usually the only person using the instance and ssh with my own private key that was used when I created the instance - there are typically no passwords whatsoever.  If I want want to give a co-worker access, I can ask them for the public ssh key, push it to the instance and I just have to tell them the remote user and IP of the instance.
