@@ -63,7 +63,7 @@ Select a tool below to learn more about it.  The _Bruno's Favorite_ column is us
 | [`oldtable`](doc/oldtable.md)                                   |                   | Parse data into a tabular form using a few input and output forms - replaced by _table_             |
 | [`peval`](doc/peval.md)                                         | Yes               | Evaluate Python expression strings                                                                  |
 | [`pipeit`](doc/pipeit.md)                                       | Maybe? Still new  | Send data to a file on a remote system                                                              |
-| [`push-ssh-key`](doc/push-ssh-key.md)                           | Maybe?            | Push your public ssh key to a remote system                                                         |
+| [`push-ssh-key`](doc/push-ssh-key.md)                           | Maybe?            | Push a public ssh key to a remote system                                                         |
 | [`pycomment`](doc/pycomment.md)                                 | Yes               | vi command to toggle Python-style comments, similar to PyCharm `ctrl-/` command                     |
 | [`pythons`](doc/pythons.md)                                     |                   | Show versions of Python/Python2/Python3 interpreters                                                |
 | [`recentdownloads`](doc/recentdownloads.md)                     |                   | Find recently downloaded files                                                                      |
