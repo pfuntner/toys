@@ -38,7 +38,7 @@ task_title = None
 statuses = 0
 target = None
 
-table = bruno_tools.Table('Task type', 'Task title', 'Target', 'Status', 'Item')
+table = bruno_tools.Table('Task type', 'Task title', 'Status', 'Item')
 pos = 0
 while pos < len(lines):
   line = lines[pos]
@@ -57,9 +57,9 @@ while pos < len(lines):
         if match:
           item = match.group(1)
           log.info(f'{item=}')
-          table.add(task_type, shorten(task_title), shorten(target, len=16), status, shorten(item, len=32))
+          table.add(task_type, shorten(task_title), status, shorten(item, len=32))
         else:
-          table.add(task_type, shorten(task_title), shorten(target), status, '')
+          table.add(task_type, shorten(task_title), status, '')
         # elif remain == '=> {':
         #   items = ['{']
         #   pos += 1
@@ -75,6 +75,6 @@ while pos < len(lines):
         # else:
         #   parser.error(f'Could not parse {remain=} from {task_type=} {task_title=} {target=}')
       else:
-        table.add(task_type, shorten(task_title), shorten(target), status, '')
+        table.add(task_type, shorten(task_title), status, '')
   pos += 1
 table.close()
