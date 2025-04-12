@@ -153,7 +153,7 @@ log.setLevel(logging.WARNING - 10*(args.verbose or 0))
 log.debug('conversions: {conversions}'.format(**locals()))
 
 measurement1 = None
-regexp = re.compile('^(-?(?:\d+\.?\d*)|(?:\d*\.?\d+))(\w+)?$')
+regexp = re.compile(r'^(-?(?:\d+\.?\d*)|(?:\d*\.?\d+))(\w+)?$')
 while True:
   if not args.args:
     break # Exhausted the arguments!
