@@ -633,7 +633,7 @@ if __name__ == '__main__':
         p.stdin.write('[targets]\n'.encode())
         for instance in instances:
           if instance.active:
-            p.stdin.write(f'''{instance.name} ansible_host={instance.ip} ansible_user={instance.user} ansible_ssh_private_key_file={instance.key_filename} ansible_ssh_common_args='-o "ProxyCommand=nc -X connect -x  proxy.esl.cisco.com:80 %h %p"'\n'''.encode())
+            p.stdin.write((f'''{instance.name} ansible_host={instance.ip} ansible_user={instance.user} ansible_ssh_private_key_file={instance.key_filename}''' + ('\n' if instance.provider=='aws' else ''' ansible_ssh_common_args='-o "ProxyCommand=nc -X connect -x proxy.esl.cisco.com:80 %h %p"'\n''')).encode())
         if os.path.exists(args.out + '.keep'):
           with open(args.out + '.keep') as stream:
             p.stdin.write(stream.read().encode())
@@ -644,7 +644,7 @@ if __name__ == '__main__':
         print(f'Writing to {ssh_config_filename}')
         with open(ssh_config_filename, 'w') as stream:
           for instance in instances:
-            stream.write(f'Host {instance.name}\n\tHostname {instance.ip}\n\tUser {instance.user}\n\tIdentityFile {instance.key_filename}\n\tProxyCommand nc -X connect -x proxy.esl.cisco.com:80 %h %p\n')
+            stream.write(f'Host {instance.name}\n\tHostname {instance.ip}\n\tUser {instance.user}\n\tIdentityFile {instance.key_filename}\n' + ('\n' if instance.provider == 'aws' else '\tProxyCommand nc -X connect -x proxy.esl.cisco.com:80 %h %p\n'))
 
           if os.path.exists(ssh_config_keep_filename):
             with open(ssh_config_keep_filename) as keep_config:
