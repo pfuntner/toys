@@ -1,0 +1,69 @@
+#! /usr/bin/env python3
+
+import re
+import sys
+import signal
+import logging
+import argparse
+import subprocess
+
+def render(pid, indent=0):
+  line = f'{pid:6} {" "*(indent*2)}'
+  if pid in pids:
+    line += pids[pid]['cmd']
+
+  if indent >= args.depth:
+    print(line)
+
+  for child in ppids.get(pid, []):
+    render(child, indent+1)
+
+parser = argparse.ArgumentParser(description='Display processes in a tree')
+parser.add_argument('-d', '--depth', type=int, default=0, help='Start at a certain level')
+parser.add_argument('-v', '--verbose', action='count', help='Enable debugging')
+args = parser.parse_args()
+
+logging.basicConfig(format='%(asctime)s %(levelname)s %(pathname)s:%(lineno)d %(msg)s')
+log = logging.getLogger(sys.argv[0])
+log.setLevel(logging.WARNING - (args.verbose or 0)*10)
+
+signal.signal(signal.SIGPIPE, lambda signum, stack_frame: exit(0))
+
+"""
+   1            2       3   4   5      6        7                                                 8
+  UID          PID    PPID  C STIME TTY          TIME CMD
+  root           1       0  0 06:54 ?        00:00:00 /sbin/init
+  root           2       1  0 06:54 ?        00:00:00 /init
+  root           6       2  0 06:54 ?        00:00:00 plan9 --control-socket 7 --log-level 4 --server-fd 8 --pipe-fd 10 --log-truncate
+  root          61       1  0 06:54 ?        00:00:00 /lib/systemd/systemd-journald
+  root          81       1  0 06:54 ?        00:00:00 /lib/systemd/systemd-udevd
+  root          91       1  0 06:54 ?        00:00:00 snapfuse /var/lib/snapd/snaps/bare_5.snap /snap/bare/5 -o ro,nodev,allow_other,suid
+  root          96       1  0 06:54 ?        00:00:00 snapfuse /var/lib/snapd/snaps/core22_1908.snap /snap/core22/1908 -o ro,nodev,allow_other,suid
+  root         101       1  0 06:54 ?        00:00:00 snapfuse /var/lib/snapd/snaps/core22_1963.snap /snap/core22/1963 -o ro,nodev,allow_other,suid
+  root         115       1  0 06:54 ?        00:00:00 snapfuse /var/lib/snapd/snaps/core24_888.snap /snap/core24/888 -o ro,nodev,allow_other,suid
+"""
+
+regex = re.compile(r'^\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+')
+
+# key is pid, value is a dictionary with keys ppid and cmd
+pids = dict()
+
+# key is ppid, value is a list of pids
+ppids = dict()
+
+process = subprocess.run(['ps', '-ef'], capture_output=True, text=True)
+for line in process.stdout.splitlines()[1:]:
+  tokens = line.split()
+  pid = int(tokens[1])
+  ppid = int(tokens[2])
+
+  pids[pid] = {
+    'ppid': ppid,
+    'cmd': regex.sub('', line),
+  }
+  if ppid not in ppids:
+    ppids[ppid] = list()
+  ppids[ppid].append(pid)
+
+for ppid in set(ppids.keys()) - set(pids.keys()):
+  render(ppid)
