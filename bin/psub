@@ -20,6 +20,9 @@ log.setLevel(logging.WARNING - (args.verbose or 0)*10)
 
 signal.signal(signal.SIGPIPE, lambda signum, stack_frame: exit(0))
 
+if sys.stdin.isatty():
+  parser.error('stdin must be directed')
+
 regexp = re.compile(args.pattern, flags=re.MULTILINE)
 
 print(regexp.sub(args.substitution, sys.stdin.read()), end='')
