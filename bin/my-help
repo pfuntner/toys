@@ -102,7 +102,7 @@ with open(cache_path, 'w') as stream:
 
 table = bruno_tools.Table('Path', 'Help')
 for path in sorted(cache['knowns'].keys()):
-  if (not args.regex) or re.search(args.regex, cache['knowns'][path]['help_text']):
+  if (not args.regex) or re.search(args.regex, path) or re.search(args.regex, cache['knowns'][path]['help_text']):
     table.add(path, cache['knowns'][path]['help_text'])
 table.close()
 
