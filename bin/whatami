@@ -3,6 +3,7 @@
 import os
 import re
 import sys
+import json
 import socket
 import hashlib
 import logging
@@ -178,6 +179,22 @@ def get_version():
 
   return ret + ', ' + hash(sys.argv[0])
 
+def readdict(*filenames):
+  for filename in filenames:
+    if os.path.isfile(filename):
+      attrs  = dict()
+      with open(filename) as stream:
+        for line in stream.read().splitlines():
+          match = re.search(r'^\s*(\w+)\s*=\s*(.+)$', line)
+          if match:
+            key, value = match.groups()
+            value = re.sub(r'''^'(.*)'$''', r'\1', value)
+            value = re.sub(r'''^"(.*)"$''', r'\1', value)
+            attrs[key] = value
+      json.dump(attrs, sys.stdout, indent=2)
+      print()
+      break
+
 parser = argparse.ArgumentParser(description='General "what am I" with respect to host system')
 parser.add_argument('-v', '--verbose', dest='verbose', action='store_true', help='Enable debugging')
 args = parser.parse_args()
@@ -199,8 +216,10 @@ run('uname -p')
 run('uname -i')
 run('uname -o')
 
-print('')
-cat('/etc/system-release') or cat('/etc/os-release')
+print()
+readdict('/etc/system-release', '/etc/os-release')
+print()
+
 show('sys.version')
 show('sys.platform')
 show('sys.path')
