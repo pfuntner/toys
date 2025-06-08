@@ -31,7 +31,7 @@ class Util:
     return "%s%02d:%02d:%06.3f" % ("%dd" % days if days else "", hours, mins, secs)
 
 class Proc:
-  allDigits = re.compile("^\d+$")
+  allDigits = re.compile(r"^\d+$")
   upTime = None
 
   def __init__(self, pid, ppid, args, jiffiesSinceBoot):
@@ -77,7 +77,7 @@ class Proc:
 def absolutePid(pid, depth=None):
   global pids
 
-  if (not depth) and re.search("^\d+-\d+$", str(pid)):
+  if (not depth) and re.search(r"^\d+-\d+$", str(pid)):
     tokens = pid.split('-')
     pid = absolutePid(int(tokens[0]), int(tokens[1]))
   elif depth:
