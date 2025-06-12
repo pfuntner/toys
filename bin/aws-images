@@ -32,7 +32,7 @@ def run(cmd, stdin=None, capture=True, shell=False):
 parser = argparse.ArgumentParser(description='Find AWS images and report information')
 parser.add_argument('-n', '--name-pattern', required=True, help='Image name regular expression pattern')
 parser.add_argument('-o', '--owner-id', help='AWS owner ID of image')
-parser.add_argument('--regexp', action='store_true', help='Pattern is a regular expression not shell pattern matching')
+parser.add_argument('--regexp', '--regular-expression', action='store_true', help='Pattern is a regular expression not shell pattern matching')
 parser.add_argument('--region', help='AWS region - your default is used if not specified')
 parser.add_argument('-v', '--verbose', action='count', help='Enable debugging')
 args = parser.parse_args()
