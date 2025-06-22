@@ -22,14 +22,13 @@ signal.signal(signal.SIGPIPE, lambda signum, stack_frame: exit(0))
 if sys.stdin.isatty():
   parser.error('stdin must be redirected')
 
-version_regex = re.compile(r'\b(\d[0-9.]+\d)\b')
-digits_regex = re.compile(r'\b(\d+)\b')
+version_regex = re.compile(r'(\d+(?:\.\d+)*\.\d+)')
 
 versions = list()
 for line in sys.stdin.read().splitlines():
   match = version_regex.search(line)
   if match:
-    versions.append({'key': [int(token) for token in digits_regex.findall(match.group(1))], 'line': line})
+    versions.append({'key': [int(token) for token in re.split(r'\.', match.group(1))], 'line': line})
 
 log.info(f'{versions=}')
 
