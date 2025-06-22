@@ -7,7 +7,10 @@ import json
 import logging
 import argparse
 
+import bruno_tools
+
 parser = argparse.ArgumentParser(description='General "what am I" with respect to host system')
+parser.add_argument('-f', '--format', default='json', choices=['json', 'table'], help='Specify output format')
 parser.add_argument('-v', '--verbose', dest='verbose', action='store_true', help='Enable debugging')
 args = parser.parse_args()
 
@@ -26,5 +29,11 @@ if os.path.isfile(filename):
         value = re.sub(r'''^'(.*)'$''', r'\1', value)
         value = re.sub(r'''^"(.*)"$''', r'\1', value)
         attrs[key] = value
-  json.dump(attrs, sys.stdout, indent=2)
-  print()
+  if args.format == 'json':
+    json.dump(attrs, sys.stdout, indent=2)
+    print()
+  elif args.format == 'table':
+    table = bruno_tools.Table('Attribute', 'Name')
+    for (key, value) in attrs.items():
+      table.add(key, bruno_tools.JustifyLeft(value))
+    table.close()
