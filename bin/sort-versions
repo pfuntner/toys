@@ -22,13 +22,16 @@ signal.signal(signal.SIGPIPE, lambda signum, stack_frame: exit(0))
 if sys.stdin.isatty():
   parser.error('stdin must be redirected')
 
-version_regex = re.compile(r'(\d+(?:\.\d+)*\.\d+)')
+version_regex = re.compile(r'(\d+(?:\.\d+)*\.\d+)(\S*)')
 
 versions = list()
 for line in sys.stdin.read().splitlines():
   match = version_regex.search(line)
   if match:
-    versions.append({'key': [int(token) for token in re.split(r'\.', match.group(1))], 'line': line})
+    key = [token.rjust(8, '0') for token in re.split(r'\.', match.group(1))]
+    if match.group(2):
+      key.append(match.group(2))
+    versions.append({'key': key, 'line': line})
 
 log.info(f'{versions=}')
 
@@ -36,4 +39,13 @@ for version in sorted(versions, key=lambda version:version['key']):
   if args.retain:
     print(version['line'])
   else:
-    print('.'.join([str(token) for token in version['key']]))
+    # get rid of the leading zeros, keeping '0' if the value is actually 0
+    key = '.'.join([str(int(token)) for token in version['key'][:-1]])
+
+    # handle the last token, which might be another digit or a non-numeric string
+    try:
+      token = int(version['key'][-1])
+      key += f'.{token}'
+    except:
+      key += version['key'][-1]
+    print(key)
