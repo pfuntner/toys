@@ -18,7 +18,7 @@ def diff(date1:datetime.datetime, date2:datetime.datetime):
     return '-' + str(date2 - date1)
 
 # Maximum age of cache entries in days
-CACHE_THRESHOLD = 30
+CACHE_THRESHOLD = 180
 
 parser = argparse.ArgumentParser(description='`Super cd` Python code')
 parser.add_argument('pat', nargs='?', help='Glob pattern to search for')
