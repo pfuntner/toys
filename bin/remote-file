@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 
+import re
 import sys
 import base64
 import signal
@@ -22,12 +23,12 @@ log.setLevel(logging.WARNING - (args.verbose or 0)*10)
 
 signal.signal(signal.SIGPIPE, lambda signum, stack_frame: exit(0))
 
-tokens = args.target.split(':')
-if len(tokens) != 2:
-  parser.error(f'Malformed target: {tokens}')
 
-remote_system = tokens[0]
-remote_file = tokens[1]
+match = re.search(r'^([^:]+):(.+)$', args.target)
+if not match:
+  parser.error(f'{args.target!r} is not a valid target')
+
+(remote_system, remote_file) = match.groups()
 
 if bool(sys.stdin.isatty()) == bool(sys.stdout.isatty()):
   parser.error('Redirect stdout or stderr but not both')
