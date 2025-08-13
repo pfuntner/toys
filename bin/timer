@@ -29,13 +29,13 @@ interrupted = False
 if not args.count_up:
   if not args.time:
     parser.error('Time is required to count down')
-  match = re.search('^(\d+)([smh]?)$', args.time)
+  match = re.search('^((?:\d+\.?\d*)|(?:\.\d+))([smh]?)$', args.time)
   if not match:
     log.critical('{args.time!r} is not a valid elapsed time'.format(**locals()))
     exit(1)
   log.debug('match: {match}'.format(match=match.groups()))
 
-  secs = int(match.group(1)) * \
+  secs = float(match.group(1)) * \
          ((60*60) if match.group(2) == 'h' else \
          (60 if match.group(2) == 'm' else 1))
   log.debug('secs: {secs}'.format(**locals()))
