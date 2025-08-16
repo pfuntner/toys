@@ -1,0 +1,33 @@
+#! /usr/bin/env python3
+
+import re
+import sys
+import signal
+import logging
+import argparse
+import subprocess
+
+parser = argparse.ArgumentParser(description='Migrate existing cloned repo from github to codeberg')
+parser.add_argument('-v', '--verbose', action='count', help='Enable debugging')
+args = parser.parse_args()
+
+logging.basicConfig(format='%(asctime)s %(levelname)s %(pathname)s:%(lineno)d %(msg)s')
+log = logging.getLogger(sys.argv[0])
+log.setLevel(logging.WARNING - (args.verbose or 0)*10)
+
+signal.signal(signal.SIGPIPE, lambda signum, stack_frame: exit(0))
+
+process = subprocess.run(['git', 'remote', '-v'], capture_output=True, text=True)
+if process.returncode != 0:
+  parser.error(f'{process.cmd} failed: {process.returncode=}, {process.stdout=}, {process.stderr=}')
+
+# git@github.com:pfuntner/LabCorp.git
+match = re.search(r'\b(git@github.com:pfuntner/([^.]+)\.git)\b', process.stdout)
+if not match:
+  parser.error(f'Could not parse {process.stdout!r}')
+
+old = match.group(1)
+new = f'git@codeberg.org:mrbruno/{match.group(2)}.git'
+print(f'{old!r} => {new!r}')
+cmd = ['git', 'remote', 'set-url', 'origin', new]
+exit(subprocess.run(cmd).returncode)
