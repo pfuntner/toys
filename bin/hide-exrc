@@ -1,8 +1,0 @@
-if test -f $HOME/.exrc
-then
-  echo "Hiding $HOME/.exrc"
-  mv -v ~/.exrc ~/hide.exrc
-else
-  echo "Restoring $HOME/.exrc"
-  mv -v ~/hide.exrc ~/.exrc
-fi

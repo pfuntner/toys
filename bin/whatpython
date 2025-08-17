@@ -1,7 +1,0 @@
-for bin in $(which python) /usr/bin/python /usr/bin/python*[0-9]
-do
-  if test -e "$bin"
-  then
-    printf "%-30s %s\n" "$bin" "$($bin --version 2>&1)"
-  fi
-done

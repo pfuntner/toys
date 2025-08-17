@@ -1,8 +1,0 @@
-#! /usr/bin/env python3
-
-import sys
-
-assert not sys.stdin.isatty(), "stdin must be redirected"
-
-for line in sys.stdin:
-  sys.stdout.write("%s\0" % line.strip("\r\n"))

@@ -1,1 +1,0 @@
-find ~ -follow -type d ! -path \*/.\* ! -path \*/Downloads\* ! -path \*/third-party\* ! -path \*/venv/\* ! -path \*/__pycache__\*
