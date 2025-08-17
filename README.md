@@ -2,7 +2,7 @@
 
 Welcome weary traveler!  Thanks for visiting my repository.
 
-I've been disturbed by [potential misuse of my creations by the owners of Github](https://www.theverge.com/news/757461/microsoft-github-thomas-dohmke-resignation-coreai-team-transition) so I've decided to migrate my repos to [Codeberg](codeberg.org).  If you have repositories too, I encourage you to consider if you want to stay with Github.  You'll continue to use the good old `git` CLI in your shell and IDEs but the backend is different.
+I've been disturbed by [potential misuse of my creations by the owners of Github](https://www.theverge.com/news/757461/microsoft-github-thomas-dohmke-resignation-coreai-team-transition) so I've decided to migrate my repos to [Codeberg](codeberg.org).  If you have repositories too, I encourage you to consider if you want to stay with Github.  There are several alternatives!  You'll continue to use the good old `git` CLI in your shell and IDEs but the backend is different.
 
 ## Welcome to Codeberg
 My repository is still alive and well at https://codeberg.org/mrbruno/toys.  I have no intention to decrease my contributions to the repository - I literally _eat my own dog food_!  Many of these tools are important to me because I often use them.
