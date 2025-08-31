@@ -11,6 +11,7 @@ You can continue to use my repo by updating the remote URL (this is what I've be
 ```
 cd toys
 git remote set-url origin https://codeberg.org/mrbruno/toys.git
+git pull # not necessary but will test that the repo is set up right
 ```
 
 If you rather, you can just remove the entire tree and just clone it again:
