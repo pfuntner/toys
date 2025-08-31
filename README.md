@@ -16,6 +16,7 @@ git remote set-url origin https://codeberg.org/mrbruno/toys.git
 If you rather, you can just remove the entire tree and just clone it again:
 ```
 cd toys/..
+rm -rf toys
 git clone https://codeberg.org/mrbruno/toys.git
 ```
 
