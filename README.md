@@ -10,13 +10,13 @@ My repository is still alive and well at https://codeberg.org/mrbruno/toys.  I h
 You can continue to use my repo by updating the remote URL (this is what I've been doing to my clones):
 ```
 cd toys
-git remote set-url origin https://codeberg.org/pfuntner/toys.git
+git remote set-url origin https://codeberg.org/mrbruno/toys.git
 ```
 
 If you rather, you can just remove the entire tree and just clone it again:
 ```
 cd toys/..
-git clone https://codeberg.org/pfuntner/toys.git
+git clone https://codeberg.org/mrbruno/toys.git
 ```
 
 ## Migrating
