@@ -25,3 +25,5 @@ git clone https://codeberg.org/mrbruno/toys.git
 I'm not going to try to convince you that you should migrate your own Github repos to Codeberg too but it's a choice and it's where I landed.  I will tell you that it's been easy to migrate my repos.  Yes, things are different and I have a little more learning to do but I'm confident enough to migrate this major repo of mine.  It took me a little to figure out how to do a webpage but it wasn't too difficult.
 
 I have not found a Codeberg replacement for [Gist](https://gist.github.com/) yet - maybe I just haven't looked hard enough or in the right place.  It's not hard to find other Gist alternatives but I haven't checked any of them out yet.
+
+I am also missing checks (CI, automation, builds, etc) which I've come to expect with Github, especially at work.  I wanted to set some up for unit testing some of my tools.  Maybe I just need to keep looking.
