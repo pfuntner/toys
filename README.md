@@ -26,4 +26,4 @@ I'm not going to try to convince you that you should migrate your own Github rep
 
 I have not found a Codeberg replacement for [Gist](https://gist.github.com/) yet - maybe I just haven't looked hard enough or in the right place.  It's not hard to find other Gist alternatives but I haven't checked any of them out yet.
 
-I am also missing checks (CI, automation, builds, etc) which I've come to expect with Github, especially at work.  I wanted to set some up for unit testing some of my tools.  Maybe I just need to keep looking.
+I am also missing checks (CI, automation, builds, etc) which I've come to expect with Github, especially at work.  I wanted to set some up for unit testing some of my tools.  Maybe I just need to keep looking.  I know a little of Github Actions but have never used them myself.  I may have to go down that path.
