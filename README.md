@@ -4,6 +4,8 @@ Welcome weary traveler!  Thanks for visiting my repository.
 
 I've been disturbed by [potential misuse of my creations by the owners of Github](https://www.runtime.news/why-microsofts-decision-to-bury-github-in-its-coreai-group-is-the-end-of-an-era/) so I've decided to migrate my repos to [Codeberg](codeberg.org).  If you have repositories too, I encourage you to consider if you want to stay with Github.  There are several alternatives!  You'll continue to use the good old `git` CLI in your shell and IDEs but the backend is different.
 
+This repository only has README.md.  It is a complete replacement of the old repo.  I *did not* just delete the files and make a commit.  The commits are *gone* on Github but you can find them on Codeberg.
+
 ## Welcome to Codeberg
 My repository is still alive and well at https://codeberg.org/mrbruno/toys.  I have no intention to decrease my contributions to the repository - I literally _eat my own dog food_!  Many of these tools are important to me because I often use them.
 
